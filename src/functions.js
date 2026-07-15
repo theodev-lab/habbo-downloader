@@ -145,7 +145,7 @@ async function initConfig (argv) {
   if (r) config.revision = r
   if (o) config.output = o
 
-  if (c === 'badges' && f === 'gif') {
+  if ((c === 'badges' || c === 'all') && f === 'gif') {
     config.format = 'gif'
   }
 

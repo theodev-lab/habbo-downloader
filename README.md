@@ -29,11 +29,13 @@ If you like this project feel free to buy me a coffee or ⭐ this repo :)
 
 ## How to use
 
-First, install habbo-downloader:
+First, install this fork from the project folder:
 
 ```bash
-npm i -g habbo-downloader
+npm i -g .
 ```
+
+Do not use `npm i -g habbo-downloader` if you want this fork: that command installs the version published on npm.
 
 After installation, you can start the script by typing `habbo-downloader` **or the shorthand** `hdl` into your terminal and specifing a command.  
 **Also check out [some examples](#examples) to get started!**
@@ -111,6 +113,7 @@ This is a list of all currently implemented commands. Please note that this proj
 
 |     Command     |                        Description                        |
 | --------------- | --------------------------------------------------------- |
+| all             | Download everything from all standard commands            |
 | articles        | Download all Habbo News Article Images                    |
 | badgeparts      | Download all Habbo Badgeparts Images                      |
 | badges          | Download all Habbo Badges                                 |
@@ -158,6 +161,12 @@ Downloading from a different domain, for example: www.habbo.es
 
 ```bash
 hdl -c gamedata -d es
+```
+
+Downloading everything from a different domain, for example: www.habbo.fr
+
+```bash
+hdl -c all -d fr
 ```
 
 Downloading Unity WebGL furniture files
