@@ -1,5 +1,3 @@
-const compareVersions = require('compare-versions')
-const package = require('../package.json')
 const fetch = require('node-fetch')
 const https = require('https')
 const path = require('path')
@@ -31,6 +29,50 @@ const parser = new XMLParser({
   parseNodeValue: false,
 })
 
+let activeStats = null
+
+function createStats () {
+  return {
+    total: 0,
+    downloaded: 0,
+    skipped: 0,
+    failed: 0,
+    errors: [],
+  }
+}
+
+function startStats () {
+  activeStats = createStats()
+
+  return activeStats
+}
+
+function stopStats () {
+  const stats = activeStats || createStats()
+  activeStats = null
+
+  return stats
+}
+
+function recordStat (key) {
+  if (activeStats) {
+    activeStats[key]++
+  }
+}
+
+function recordError (src, dst, err) {
+  if (!activeStats) {
+    return
+  }
+
+  activeStats.errors.push({
+    src,
+    dst,
+    status: err.status || null,
+    message: err.message,
+  })
+}
+
 async function fileExists (file) {
   try {
     await fs.promises.access(file, fs.constants.F_OK)
@@ -44,7 +86,11 @@ async function fetchRaw (src) {
   const res = await fetch(src, opt)
 
   if (res.ok === false) {
-    throw new Error(`${res.status} ${src}`)
+    const err = new Error(`${res.status} ${src}`)
+    err.status = res.status
+    err.src = src
+
+    throw err
   }
 
   return res
@@ -65,40 +111,43 @@ async function fetchJson (src) {
 }
 
 async function fetchOne (src, dst, replace = false) {
-  dst = path.join(config.output, dst)
+  recordStat('total')
+
+  const file = dst
+  dst = path.join(config.output, file)
 
   if (await fileExists(dst) && replace === false) {
+    recordStat('skipped')
     return `skipped: ${src}`
   }
 
-  const res = await fetchRaw(src)
+  try {
+    const res = await fetchRaw(src)
 
-  await fs.promises.mkdir(path.dirname(dst), { recursive: true })
-  await pipeline(res.body, fs.createWriteStream(dst))
+    await fs.promises.mkdir(path.dirname(dst), { recursive: true })
+    await pipeline(res.body, fs.createWriteStream(dst))
 
-  return `${res.status} ${src}`
+    recordStat('downloaded')
+    return `${res.status} ${src}`
+  } catch (err) {
+    recordStat('failed')
+    recordError(src, file, err)
+    throw err
+  }
 }
 
 async function fetchMany (all, replace = false) {
-  await Promise.allSettled(
-    all.map((v) => fetchOne(v.src, v.dst, replace)
-      .then(console.log)
-      .catch((err) => console.log(err.message))
-    )
-  )
+  await Promise.allSettled(all.map((v) => fetchOne(v.src, v.dst, replace)))
 }
 
 async function fetchUntil (opt, maxRetries = 3, i = 1, failed = 0) {
   try {
-    console.log(
-      await fetchOne(
-        opt.src.replace('%i%', i),
-        opt.dst.replace('%i%', i)
-      )
+    await fetchOne(
+      opt.src.replace('%i%', i),
+      opt.dst.replace('%i%', i)
     )
     failed = 0
   } catch (err) {
-    console.log(err.message)
     failed++
   } finally {
     if (failed < maxRetries) {
@@ -125,13 +174,6 @@ async function parseXml (txt) {
   return parser.parse(txt)
 }
 
-async function checkUpdate () {
-  const json = await fetchJson('https://registry.npmjs.org/habbo-downloader/latest')
-  if (compareVersions(json.version, package.version) > 0) {
-    console.log(`\u001b[33m[NOTE] A new version is available: "${json.version}". You are using version: "${package.version}". Please update habbo-downloader by running "npm i -g habbo-downloader" inside of the terminal.\u001b[0m\n`)
-  }
-}
-
 async function initConfig (argv) {
   const c = argv.c || argv.command
   const d = argv.d || argv.domain
@@ -145,11 +187,15 @@ async function initConfig (argv) {
   if (r) config.revision = r
   if (o) config.output = o
 
-  if ((c === 'badges' || c === 'all') && f === 'gif') {
+  const commands = String(c || '')
+    .split(',')
+    .map((command) => command.trim())
+
+  if ((commands.includes('badges') || commands.includes('all')) && f === 'gif') {
     config.format = 'gif'
   }
 
   config.prod = (await fetchText(`https://www.habbo.${config.domain}/gamedata/external_variables/0`)).match(/flash\.client\.url=.+(flash-assets-[^/]+)/mi)[1]
 }
 
-module.exports = { fetchText, fetchJson, fetchOne, fetchMany, fetchUntil, collectAllTexts, parseXml, checkUpdate, initConfig, config }
+module.exports = { fetchText, fetchJson, fetchOne, fetchMany, fetchUntil, collectAllTexts, parseXml, initConfig, config, startStats, stopStats, createStats }
