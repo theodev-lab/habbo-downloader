@@ -11,7 +11,7 @@ A tiny script to download various files directly from Habbo.
 ## Note
 
 If you are looking for a specific file or dont want to use habbo-downloader yourself,
-you can take a look at the [resource](https://github.com/higoka/habbo-downloader/tree/main/resource) folder. This folder contains all downloaded files from 
+you can take a look at the [resource](https://github.com/higoka/habbo-downloader/tree/main/resource) folder. This folder contains all downloaded files from
 habbo-downloader and updates automatically every 3 hours.
 
 If you like this project feel free to buy me a coffee or ⭐ this repo :)
@@ -32,10 +32,9 @@ If you like this project feel free to buy me a coffee or ⭐ this repo :)
 First, install this fork from the project folder:
 
 ```bash
-npm i -g .
+npm install
+npm link
 ```
-
-Do not use `npm i -g habbo-downloader` if you want this fork: that command installs the version published on npm.
 
 After installation, you can start the script by typing `habbo-downloader` **or the shorthand** `hdl` into your terminal and specifing a command.  
 **Also check out [some examples](#examples) to get started!**
@@ -51,7 +50,7 @@ Here is a list of all currently available options.
 #### REQUIRED
 
 ```
--c OR --command [COMMAND NAME]  
+-c OR --command [COMMAND NAME]
 ```
 
 Defines the command to execute. See below the list of all available commands.
@@ -60,26 +59,25 @@ Defines the command to execute. See below the list of all available commands.
 
 ```
 -o OR --output [VALUE]
-```  
+```
 
 Defines the output folder for the downloaded files.
 
 **Default**: `./resource`  
 **Value**: `Any valid path works`
 
-
 ```
 -d OR --domain [VALUE]
-```  
+```
 
-Defines from which domain the files should be downloaded.  
+Defines from which domain the files should be downloaded.
 
 **Default**: `com`  
 **Value**: `com.br, com.tr, com, de, es, fi, fr, it, nl`
 
 ```
 -r OR --revision
-```  
+```
 
 If specified, downloads furnitures and furniture icons inside of the revision
 folder else downloads directly to `dcr/hof_furni`
@@ -89,7 +87,7 @@ folder else downloads directly to `dcr/hof_furni`
 
 ```
 -f OR --format [VALUE]
-```  
+```
 
 Which format to use when downloading badges. Habbo now by default use PNG for their badges.  
 However you can still use GIF if you prefer that.
@@ -102,7 +100,7 @@ However you can still use GIF if you prefer that.
 ```
 
 Maximal amount of open sockets to server. Increasing this value can improve download performance but  
-**a too high value can result in blocked requests** becuase of Habbos DDOS protection.  
+**a too high value can result in blocked requests** becuase of Habbos DDOS protection.
 
 **Default**: `100`  
 **Value**: `Any number is valid`
@@ -111,25 +109,24 @@ Maximal amount of open sockets to server. Increasing this value can improve down
 
 This is a list of all currently implemented commands. Please note that this project is still a **work in progress**.
 
-|     Command     |                        Description                        |
-| --------------- | --------------------------------------------------------- |
-| all             | Download everything from all standard commands            |
-| articles        | Download all Habbo News Article Images                    |
-| badgeparts      | Download all Habbo Badgeparts Images                      |
-| badges          | Download all Habbo Badges                                 |
-| clothes         | Download all Habbo Clothes                                |
-| effects         | Download all Habbo Effects                                |
-| ficons          | Download all Habbo Furniture Icons                        |
-| furnitures      | Download all Habbo Furnitures + Icons                     |
-| gamedata        | Download all Habbo Gamedata                               |
-| gordon          | Download all Habbo Gordon Files                           |
-| habboswf        | Download the latest Habbo.swf                             |
-| hotelview       | Download all Habbo Hotelview Images                       |
-| icons           | Download all Habbo Catalogue Icons                        |
-| mp3             | Download all Habbo MP3 Files (sound_machine_sample)       |
-| pets            | Download all Habbo Pets                                   |
-| promo           | Download all Habbo Web Promo Images                       |
-
+| Command    | Description                                         |
+| ---------- | --------------------------------------------------- |
+| all        | Download everything from all standard commands      |
+| articles   | Download all Habbo News Article Images              |
+| badgeparts | Download all Habbo Badgeparts Images                |
+| badges     | Download all Habbo Badges                           |
+| clothes    | Download all Habbo Clothes                          |
+| effects    | Download all Habbo Effects                          |
+| ficons     | Download all Habbo Furniture Icons                  |
+| furnitures | Download all Habbo Furnitures + Icons               |
+| gamedata   | Download all Habbo Gamedata                         |
+| gordon     | Download all Habbo Gordon Files                     |
+| habboswf   | Download the latest Habbo.swf                       |
+| hotelview  | Download all Habbo Hotelview Images                 |
+| icons      | Download all Habbo Catalogue Icons                  |
+| mp3        | Download all Habbo MP3 Files (sound_machine_sample) |
+| pets       | Download all Habbo Pets                             |
+| promo      | Download all Habbo Web Promo Images                 |
 
 ## HABBO 2020 (Unity WebGL)
 
@@ -137,11 +134,11 @@ If you want to download unity files of **Habbo 2020** simply pass the option `--
 
 These commands support downloading unity files
 
-|     Command     |                        Description                        |
-| --------------- | --------------------------------------------------------- |
-| clothes         | Download all Unity Clothes                                |
-| effects         | Download all Unity Effects                                |
-| furnitures      | Download all Unity Furnitures                             |
+| Command    | Description                   |
+| ---------- | ----------------------------- |
+| clothes    | Download all Unity Clothes    |
+| effects    | Download all Unity Effects    |
+| furnitures | Download all Unity Furnitures |
 
 ## Examples
 

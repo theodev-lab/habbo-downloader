@@ -1,58 +1,65 @@
 {
-  "name": "habbo-downloader",
-  "version": "2.25.0",
-  "description": "A tiny script to download various files directly from Habbo.",
-  "keywords": [
-    "badges",
-    "furnitures",
-    "clothes",
-    "effects",
-    "icons",
-    "mp3",
-    "hotelview",
-    "gamedata",
-    "pets",
-    "badgeparts",
-    "articles",
-    "news",
-    "habbo",
-    "downloader",
-    "ripper",
-    "habbo-downloader",
-    "hdl",
-    "retrotown",
-    "devbest",
-    "ragezone",
-    "krews",
-    "nodejs",
-    "unity",
-    "unity-webgl",
-    "webgl",
-    "fast",
-    "performance"
-  ],
-  "homepage": "https://github.com/higoka/habbo-downloader",
-  "bugs": {
-    "url": "https://github.com/higoka/habbo-downloader/issues"
-  },
-  "license": "MIT",
-  "author": "Nico Rickenbach",
-  "main": "src/index.js",
-  "funding": "https://paypal.me/nicorickenbach",
-  "bin": {
-    "habbo-downloader": "src/index.js",
-    "hdl": "src/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/higoka/habbo-downloader.git"
-  },
-  "dependencies": {
-    "fast-xml-parser": "^4.3.2",
-    "minimist": "^1.2.8",
-    "node-fetch": "^2.7.0"
-  },
-  "engines": {
-    "node": ">=15.0"
-  }
+	"name": "habbo-downloader",
+	"version": "2.25.0",
+	"description": "A tiny script to download various files directly from Habbo.",
+	"keywords": [
+		"badges",
+		"furnitures",
+		"clothes",
+		"effects",
+		"icons",
+		"mp3",
+		"hotelview",
+		"gamedata",
+		"pets",
+		"badgeparts",
+		"articles",
+		"news",
+		"habbo",
+		"downloader",
+		"ripper",
+		"habbo-downloader",
+		"hdl",
+		"retrotown",
+		"devbest",
+		"ragezone",
+		"krews",
+		"nodejs",
+		"unity",
+		"unity-webgl",
+		"webgl",
+		"fast",
+		"performance"
+	],
+	"homepage": "https://github.com/higoka/habbo-downloader",
+	"bugs": {
+		"url": "https://github.com/higoka/habbo-downloader/issues"
+	},
+	"license": "MIT",
+	"author": "Nico Rickenbach",
+	"main": "src/index.js",
+	"scripts": {
+		"format": "prettier --write .",
+		"format:check": "prettier --check ."
+	},
+	"funding": "https://paypal.me/nicorickenbach",
+	"bin": {
+		"habbo-downloader": "src/index.js",
+		"hdl": "src/index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/higoka/habbo-downloader.git"
+	},
+	"dependencies": {
+		"fast-xml-parser": "^4.3.2",
+		"minimist": "^1.2.8",
+		"node-fetch": "^2.7.0"
+	},
+	"engines": {
+		"node": ">=15.0"
+	},
+	"devDependencies": {
+		"prettier": "^3.9.5"
+	}
 }
